@@ -15,7 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dialga.cpp">
+    <ClInclude Include="..\include\tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\driver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
