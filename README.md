@@ -1,5 +1,5 @@
 # deepdive
 # author - avi
 
-* Dependencies *
+** Dependencies **
 1. Unit testing - Boost 1.79.0
