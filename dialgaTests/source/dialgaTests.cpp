@@ -9,41 +9,56 @@
 #include <string>
 #include <algorithm>
 
-using intTreeT = dialga::tree<int>;
+using intTreeT = dialga::containers::tree<int>;
 
-struct treeFixture
+
+
+struct treeFixtureUnbalanced
 {
-    treeFixture()
+    treeFixtureUnbalanced()
     {
         BOOST_TEST_MESSAGE("populating tree...");
-        int nums[] = { 1, 7, 2, 4, 5 };
-        const size_t numEls = sizeof(nums) / sizeof(int);
-
-        std::for_each(nums, nums + numEls, [&](int x) {
+        const std::string fileName = "../../dialgaShared/data/test00.txt";
+        std::vector<int>& input = dialga::utils::fetchTest(fileName);
+        for (auto& x : input)
+        {
             _root.insert(x);
-            });
+        }
     }
     intTreeT _root;
+    std::string _sep = "-";
 };
 
-BOOST_FIXTURE_TEST_CASE(testTreePreOrder, treeFixture)
+BOOST_FIXTURE_TEST_CASE(testTreePreOrder, treeFixtureUnbalanced)
 {
     std::vector<int> cont;
     _root.preOrder(cont);
-    BOOST_CHECK("1x72x4x5xxx" == dialgaUtils::vec2Str(cont));
+    BOOST_CHECK("1-2-3-4-5-7-8-9-10-11-12-13-14-15-16" == dialga::utils::vec2Str(cont, _sep));
 }
 
-BOOST_FIXTURE_TEST_CASE(testTreePostOrder, treeFixture)
+BOOST_FIXTURE_TEST_CASE(testTreePostOrder, treeFixtureUnbalanced)
 {
     std::vector<int> cont;
     _root.postOrder(cont);
-    BOOST_CHECK("xxxxx542x71" == dialgaUtils::vec2Str(cont));
+    BOOST_CHECK("16-15-14-13-12-11-10-9-8-7-5-4-3-2-1" == dialga::utils::vec2Str(cont, _sep));
 }
 
-BOOST_FIXTURE_TEST_CASE(testTreeInOrder, treeFixture)
+BOOST_FIXTURE_TEST_CASE(testTreeInOrder, treeFixtureUnbalanced)
 {
     std::vector<int> cont;
     _root.inOrder(cont);
-    BOOST_CHECK("x1x2x4x5x7x" == dialgaUtils::vec2Str(cont));
+    BOOST_CHECK("1-2-3-4-5-7-8-9-10-11-12-13-14-15-16" == dialga::utils::vec2Str(cont, _sep));
+}
+
+BOOST_FIXTURE_TEST_CASE(testBalancedTreeInOrder, treeFixtureUnbalanced)
+{
+    std::vector<int> cont;
+    intTreeT* balanced = _root.balance();
+    if (balanced)
+    {
+        balanced->inOrder(cont);
+        delete balanced;
+    }
+    BOOST_CHECK("1-2-3-4-5-7-8-9-10-11-12-13-14-15-16" == dialga::utils::vec2Str(cont, _sep));
 }
 

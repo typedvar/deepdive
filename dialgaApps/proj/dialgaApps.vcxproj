@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\dialgaTests.cpp" />
+    <ClCompile Include="..\source\dialgaApps.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{fac11d3a-1ff9-4923-ab54-411e14a91eef}</ProjectGuid>
-    <RootNamespace>dialgaTests</RootNamespace>
+    <ProjectGuid>{3c72dece-be5d-40e6-a048-9d8299ab810c}</ProjectGuid>
+    <RootNamespace>dialgaApps</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,20 +74,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ExternalIncludePath>C:\dev\boost_1_79_0;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\dev\boost_1_79_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)..\source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ExternalIncludePath>C:\dev\boost_1_79_0;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\dev\boost_1_79_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)..\source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <ExternalIncludePath>C:\dev\boost_1_79_0;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\dev\boost_1_79_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)..\source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ExternalIncludePath>C:\dev\boost_1_79_0;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>C:\dev\boost_1_79_0\stage\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)..\source;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

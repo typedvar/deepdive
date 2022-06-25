@@ -5,30 +5,41 @@
 #include <tree.h>
 #include "../../dialgaShared/include/dialgaUtils.h"
 
-using intTreeT = dialga::tree<int>;
+using intTreeT = dialga::containers::tree<int>;
 
 int main()
 {
     intTreeT root;
-    int nums[] = { 1, 7, 2, 4, 5 };
-    const size_t numEls = sizeof(nums) / sizeof(int);
 
-    std::for_each(nums, nums + numEls, [&](int x) {
+    const std::string fileName = "../../dialgaShared/data/test00.txt";
+    std::vector<int>& input = dialga::utils::fetchTest(fileName);
+    for (auto& x : input)
+    {
         root.insert(x);
-        });
+    }
 
-    std::string out;
+    int treeIndentPerLevel = 2;
+
+    std::cout << "Tree - " << std::endl << root.toString(treeIndentPerLevel) << std::endl;
+
+    std::string sep = "-";
     std::vector<int> cont1;
     root.preOrder(cont1);
-    std::cout << "Pre-order - " << dialgaUtils::vec2Str(cont1) << std::endl;
+    std::cout << "Pre-order - " << dialga::utils::vec2Str(cont1, sep) << std::endl;
 
     std::vector<int> cont2;
     root.postOrder(cont2);
-    std::cout << "Post-order - " << dialgaUtils::vec2Str(cont2) << std::endl;
+    std::cout << "Post-order - " << dialga::utils::vec2Str(cont2, sep) << std::endl;
 
     std::vector<int> cont3;
     root.inOrder(cont3);
-    std::cout << "In-order - " << dialgaUtils::vec2Str(cont3) << std::endl;
+    std::cout << "In-order - " << dialga::utils::vec2Str(cont3, sep) << std::endl;
+
+    intTreeT* balanced = root.balance();
+    if (balanced)
+    {
+        std::cout << "Balanced tree - " << std::endl << balanced->toString(treeIndentPerLevel) << std::endl;
+    }
 
     return 0;
 }
