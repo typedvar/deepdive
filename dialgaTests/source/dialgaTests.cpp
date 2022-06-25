@@ -11,11 +11,9 @@
 
 using intTreeT = dialga::containers::tree<int>;
 
-
-
-struct treeFixtureUnbalanced
+struct treeFixture
 {
-    treeFixtureUnbalanced()
+    treeFixture()
     {
         BOOST_TEST_MESSAGE("populating tree...");
         const std::string fileName = "../../dialgaShared/data/test00.txt";
@@ -29,28 +27,28 @@ struct treeFixtureUnbalanced
     std::string _sep = "-";
 };
 
-BOOST_FIXTURE_TEST_CASE(testTreePreOrder, treeFixtureUnbalanced)
+BOOST_FIXTURE_TEST_CASE(testTreePreOrder, treeFixture)
 {
     std::vector<int> cont;
     _root.preOrder(cont);
     BOOST_CHECK("1-2-3-4-5-7-8-9-10-11-12-13-14-15-16" == dialga::utils::vec2Str(cont, _sep));
 }
 
-BOOST_FIXTURE_TEST_CASE(testTreePostOrder, treeFixtureUnbalanced)
+BOOST_FIXTURE_TEST_CASE(testTreePostOrder, treeFixture)
 {
     std::vector<int> cont;
     _root.postOrder(cont);
     BOOST_CHECK("16-15-14-13-12-11-10-9-8-7-5-4-3-2-1" == dialga::utils::vec2Str(cont, _sep));
 }
 
-BOOST_FIXTURE_TEST_CASE(testTreeInOrder, treeFixtureUnbalanced)
+BOOST_FIXTURE_TEST_CASE(testTreeInOrder, treeFixture)
 {
     std::vector<int> cont;
     _root.inOrder(cont);
     BOOST_CHECK("1-2-3-4-5-7-8-9-10-11-12-13-14-15-16" == dialga::utils::vec2Str(cont, _sep));
 }
 
-BOOST_FIXTURE_TEST_CASE(testBalancedTreeInOrder, treeFixtureUnbalanced)
+BOOST_FIXTURE_TEST_CASE(testBalancedTreeInOrder, treeFixture)
 {
     std::vector<int> cont;
     intTreeT* balanced = _root.balance();
