@@ -48,6 +48,12 @@ BOOST_FIXTURE_TEST_CASE(testTreeInOrder, treeFixture)
     BOOST_CHECK("1-2-3-4-5-7-8-9-10-11-12-13-14-15-16" == dialga::utils::vec2Str(cont, _sep));
 }
 
+BOOST_FIXTURE_TEST_CASE(testTreeInOrderNoRec, treeFixture)
+{
+    std::vector<int> cont;
+    _root.inOrderNoRec(cont);
+    BOOST_CHECK("1-2-3-4-5-7-8-9-10-11-12-13-14-15-16" == dialga::utils::vec2Str(cont, _sep));
+}
 BOOST_FIXTURE_TEST_CASE(testBalancedTreeInOrder, treeFixture)
 {
     std::vector<int> cont;

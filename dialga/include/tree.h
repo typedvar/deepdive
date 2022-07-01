@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <stack>
 
 namespace dialga
 {
@@ -10,17 +11,19 @@ namespace dialga
         template <typename T>
         struct tree
         {
+            using nodeStackT = std::stack<tree<T>*>;
+
             T* _data = nullptr; // default constructible
             tree<T>* _left = nullptr;
             tree<T>* _right = nullptr;
-            tree<T>* _parent = nullptr;
 
             tree<T>(T val)
                 : _data(new T(val)) {}
 
             tree<T>() {}
 
-            ~tree<T>() {
+            ~tree<T>()
+            {
                 delete _left;
                 delete _right;
                 delete _data;
@@ -30,12 +33,10 @@ namespace dialga
                 : _data(source._data)
                 , _left(source._left)
                 , _right(source._right)
-                , _parent(source._parent)
             {
                 source._data = nullptr;
                 source._left = nullptr;
                 source._right = nullptr;
-                source._parent = nullptr;
             }
 
             tree<T>* insert(T val)
@@ -57,7 +58,6 @@ namespace dialga
                         else
                         {
                             _left = new tree<T>(val);
-                            _left->_parent = this;
                             ret = _left;
                         }
                     }
@@ -70,22 +70,11 @@ namespace dialga
                         else
                         {
                             _right = new tree<T>(val);
-                            _right->_parent = this;
                             ret = _right;
                         }
                     }
                 }
                 return ret;
-            }
-
-            tree<T>* left()
-            {
-                return _left;
-            }
-
-            tree<T>* right()
-            {
-                return _right;
             }
 
             void inOrder(std::vector<T>& out)
@@ -142,6 +131,32 @@ namespace dialga
                 }
             }
 
+            void inOrderNoRec(std::vector<T>& out)
+            {
+                nodeStackT nodeStack;
+                tree<T>* curr = this;
+                bool done = false;
+
+                while (!done)
+                {
+                    while (curr)
+                    {
+                        nodeStack.push(curr);
+                        curr = curr->_left;
+                    }
+
+                    curr = nodeStack.top();
+                    out.push_back(*(curr->_data));
+                    curr = curr->_right;
+
+                    nodeStack.pop();
+                    if (!curr && nodeStack.empty())
+                    {
+                        done = true;
+                    }
+                }
+            }
+
             tree<T>* balancedCreate(std::vector<T>& nodeVals, size_t start, size_t end)
             {
                 tree<T>* ret = nullptr;
@@ -149,16 +164,14 @@ namespace dialga
                 if (end >= start)
                 {
                     size_t diff = end - start;
+                    // two or less nodes - create both
                     if (diff < 2)
                     {
                         tree<T>* nodeL = new tree<T>(nodeVals[start]);
-                        nodeL->_parent = this;
-
                         if (end != start)
                         {
                             tree<T>* nodeR = new tree<T>(nodeVals[end]);
                             nodeL->_right = nodeR;
-                            nodeR->_parent = nodeL;
                         }
                         ret = nodeL;
                     }
@@ -167,7 +180,6 @@ namespace dialga
                         size_t mid = (end - start) / 2 + start;
                         T val = nodeVals[mid];
                         ret = new tree<T>(val);
-                        ret->_parent = this;
 
                         if (mid > 0)
                         {
@@ -227,7 +239,6 @@ namespace dialga
                     ret += "<R>";
                     ret += "(.)";
                 }
-
                 return ret;
             }
 
